@@ -7,6 +7,16 @@
 #include <dt-bindings/zmk/pointing.h>
 
 / {
+    macros {
+        cpp_deref: cpp_deref {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp MINUS &kp GT>;
+        };
+    };
+
     behaviors {
       #include "macros.dtsi"
       #include "version.dtsi"
