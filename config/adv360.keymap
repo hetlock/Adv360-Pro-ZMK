@@ -336,22 +336,46 @@
     };
     extra1 { 
       display-name = "Red";    
-      status = "reserved";
+      bindings = <
+        &none &none &none &none &none &none &none                                                                     &none                 &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                                                               &none            &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                   &none &none &none &none                      &none &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none                                       &none &none &none &none      &none &none                                     &none   &none   &none &none &none
+      >;
     };
 
     extra2 { 
       display-name = "Purple";    
-      status = "reserved";
+      bindings = <
+        &none &none &none &none &none &none &none                                                                     &none                 &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                                                               &none            &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                   &none &none &none &none                      &none &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none                                       &none &none &none &none      &none &none                                     &none   &none   &none &none &none
+      >;
     };
 
     extra3 { 
       display-name = "Cyan";    
-      status = "reserved";
+      bindings = <
+        &none &none &none &none &none &none &none                                                                     &none                 &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                                                               &none            &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                   &none &none &none &none                      &none &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none                                       &none &none &none &none      &none &none                                     &none   &none   &none &none &none
+      >;
     };
 
     extra4 { 
       display-name = "Yellow";    
-      status = "reserved";
+      bindings = <
+        &none &none &none &none &none &none &none                                                                     &none                 &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                                                               &none            &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none        &none        &none                   &none &none &none &none                      &none &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
+        &none &none        &none        &none        &none                                       &none &none &none &none      &none &none                                     &none   &none   &none &none &none
+      >;
     };
   };
 };
