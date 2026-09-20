@@ -294,6 +294,7 @@
   keymap {
     compatible = "zmk,keymap";
 
+/*
     default_layer {
       display-name = "Base";
       bindings = <
@@ -304,6 +305,23 @@
         &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
       >;
     };
+*/
+
+default_layer {
+            display-name = "Base";
+            bindings = <
+  /* Left Hand Row 1 */                                                                                                                     /* Right Hand Row 1 */
+  &kp F1          &kp DE_MINUS    &kp DE_2        &kp DE_3        &kp DE_4        &kp DE_PLUS     &tog 1                                    &mo &kp DE_U_UMLAUT &kp DE_7        &kp DE_8        &kp DE_9        &kp DE_SHARP_S  &kp DE_CARET
+  /* Left Hand Row 2 */                                                                                                                     /* Right Hand Row 2 */
+  &kp TAB         &kp DE_LESS_THAN &kp DE_COMMA   &kp DE_PERIOD   &kp DE_P        &kp DE_Y        &cpp_deref                                &none      &kp DE_F        &kp DE_G        &kp DE_C        &kp DE_R        &kp DE_L        &kp DE_O_UMLAUT
+  /* Left Hand Row 3 */                                                                                                                     /* Right Hand Row 3 */
+  &kp ESC         &kp DE_A        &kp DE_O        &kp DE_E        &kp DE_U        &kp DE_I        &none         &kp LCTRL &kp LALT &kp LGUI  &kp RALT  &none      &kp DE_D        &kp DE_H        &kp DE_T        &kp DE_N        &kp DE_S        &kp DE_0
+  /* Left Hand Row 4 */                                                                                                                     /* Right Hand Row 4 */
+  &kp DEL         &kp DE_1        &kp DE_Q        &kp DE_J        &kp DE_K        &kp DE_X                                &kp HOME &none                       &kp DE_B        &kp DE_M        &kp DE_W        &kp DE_V        &kp DE_Z        &kp DE_U_UMLAUT
+  /* Left Hand Row 5 */                                                                                                                     /* Right Hand Row 5 */
+  &mo 2           &kp DE_A_UMLAUT &kp DE_5        &kp LEFT        &kp RIGHT                       &kp BSPC      &kp LSHIFT &kp END  &kp RCTRL &kp ENTER    &kp SPACE                  &kp UP          &kp DOWN        &kp DE_6        &kp DE_HASH     &mo 3
+            >;
+        };
     keypad {
       display-name = "Kp";
       bindings = <
