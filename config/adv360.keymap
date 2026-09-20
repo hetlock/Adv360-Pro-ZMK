@@ -8,16 +8,43 @@
 
 / {
     macros {
-        cpp_deref: cpp_deref {
+        // Option 1: Shift + Period (Likeliest winner for US hardware on German OS)
+        deref_opt1: deref_opt1 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings 
-                = <&kp SLASH>               // Maps to "-" on German Windows
-                , <&kp LS(NON_US_HASH)>;    // Maps to ">" on German Windows
+            bindings = <&kp SLASH &kp LS(DOT)>;
+        };
+
+        // Option 2: Pure raw key translation (Slash + Non-US-Hash)
+        deref_opt2: deref_opt2 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp SLASH &kp LS(NON_US_HASH)>;
+        };
+
+        // Option 3: Shift + Comma (Alternative layout layout alignment)
+        deref_opt3: deref_opt3 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp SLASH &kp LS(COMMA)>;
+        };
+
+        // Option 4: Pure US-layout codes (Just in case your IDE handles translations)
+        deref_opt4: deref_opt4 {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp MINUS &kp GT>;
         };
     };
+
 
     behaviors {
       #include "macros.dtsi"
