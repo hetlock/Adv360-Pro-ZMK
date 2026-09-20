@@ -13,7 +13,9 @@
             #binding-cells = <0>;
             wait-ms = <10>;
             tap-ms = <10>;
-            bindings = <&kp MINUS &kp GT>;
+            bindings 
+                = <&kp SLASH>               // Maps to "-" on German Windows
+                , <&kp LS(NON_US_HASH)>;    // Maps to ">" on German Windows
         };
     };
 
