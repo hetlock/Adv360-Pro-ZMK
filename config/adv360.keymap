@@ -294,19 +294,19 @@
   keymap {
     compatible = "zmk,keymap";
 
-/*
+
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog 1                                                           &mo 3 &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo 2     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo 2
+        &kp F2 &kp DE_MINUS    &kp DE_2   &kp DE_3   &kp DE_4     &kp DE_PLUS &tog 1                                                           &mo 3 &kp DE_U_UMLAUT &kp DE_7 &kp DE_8    &kp DE_9   &kp DE_SHARP_S   &kp DE_CARET
+        &kp TAB   &kp DE_LESS_THAN     &kp DE_COMMA    &kp DE_PERIOD    &kp DE_P      &kp DE_Y  &none                                                            &none &kp DE_F  &kp DE_G  &kp DE_C     &kp DE_R    &kp DE_L    &kp DE_O_UMLAUT
+        &kp ESC   &kp DE_A     &kp DE_O    &kp DE_E   &kp DE_U      &kp DE_I  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RALT           &none &kp DE_D  &kp DE_H  &kp DE_T     &kp DE_N    &kp DE_S &kp DE_0
+        &kp DEL &kp DE_1     &kp DE_Q    &kp DE_J    &kp DE_K      &kp DE_X                            &kp HOME &none                           &kp DE_B  &kp DE_M  &kp DE_W &kp DE_V  &kp DE_Z &kp DE_U_UMLAUT
+        &mo 2     &kp DE_A_UMLAUT &kp DE_5 &kp LEFT &kp RIGHT                &kp BSPC &kp LSHIFT   &kp mo 4  &kp RCTRL &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp DE_6 &kp DE_HASH &mo 3
       >;
     };
-*/
 
+/*
 default_layer {
             display-name = "Base";
             bindings = <
@@ -322,6 +322,16 @@ default_layer {
   &mo 2           &kp DE_A_UMLAUT &kp DE_5        &kp LEFT        &kp RIGHT                       &kp BSPC      &kp LSHIFT &kp END  &kp RCTRL &kp ENTER    &kp SPACE                  &kp UP          &kp DOWN        &kp DE_6        &kp DE_HASH     &mo 3
             >;
         };
+default_layer {
+            display-name = "Base";
+            bindings = <
+  &kp F2          &kp DE_MINUS    &kp DE_2        &kp DE_3        &kp DE_4        &kp DE_PLUS     &kp KP_NUM                                                                                &mo 3    &kp DE_U_UMLAUT &kp DE_7        &kp DE_8        &kp DE_9        &kp DE_SHARP_S  &kp DE_CARET
+  &kp TAB         &kp DE_LESS_THAN &kp DE_COMMA   &kp DE_PERIOD   &kp DE_P        &kp DE_Y        &cpp_deref                                                                                &none         &kp DE_F        &kp DE_G        &kp DE_C        &kp DE_R        &kp DE_L        &kp DE_O_UMLAUT
+  &kp ESC         &kp DE_A        &kp DE_O        &kp DE_E        &kp DE_U        &kp DE_I        &none            &kp LCTRL      &kp LALT       &kp LGUI       &kp RALT                 &none         &kp DE_D        &kp DE_H        &kp DE_T        &kp DE_N        &kp DE_S        &kp DE_0
+  &kp DEL         &kp DE_1        &kp DE_Q        &kp DE_J        &kp DE_K        &kp DE_X                                        &kp HOME       &kp PG_UP                                              &kp DE_B        &kp DE_M        &kp DE_W        &kp DE_V        &kp DE_Z        &kp DE_U_UMLAUT
+  &mo 2           &kp DE_A_UMLAUT &kp DE_5        &kp LEFT        &kp RIGHT                       &kp BSPC         &kp LSHIFT     &mo 4        &kp RCRTL      &kp ENTER        &kp SPACE                                &kp UP          &kp DOWN        &kp DE_6        &kp DE_HASH     &mo 5
+            >;
+        };*/
     keypad {
       display-name = "Kp";
       bindings = <
