@@ -294,6 +294,7 @@
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
+ &sqt_dqt                | Types '; with Shift it types ".
 
  NOTES
 -------------------------------------------------------------------------------
@@ -364,7 +365,7 @@
       // Tap U = u, hold U = Num layer (5).
       // The layer only switches on if the next key is on the right half,
       // one of the left Num keys (8 4 5 6, Base 1 and 5) or Shift. So rolls
-      // like "you." "you," or "you " always type u. While typing fast
+      // like "you." "you," "you'll" or "you " always type u. While typing fast
       // (less than 150 ms since the previous key) U is always just u.
       hl: hold_layer {
           compatible = "zmk,behavior-hold-tap";
@@ -381,6 +382,14 @@
           >;
           bindings = <&mo>, <&kp>;
       };
+
+      // ' and, with Shift, " (like on an English keyboard)
+      sqt_dqt: single_double_quote {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_SINGLE_QUOTE>, <&kp DE_DOUBLE_QUOTES>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
     };
 
   keymap {
@@ -390,9 +399,9 @@
       display-name = "Base";
       bindings = <
         &kp F2           &kp DE_MINUS     &kp DE_2         &kp DE_3         &kp DE_4         &kp DE_PLUS      &tog 1                                                                                           &mo 3            &kp DE_U_UMLAUT  &kp DE_7         &kp DE_8         &kp DE_9         &kp DE_SHARP_S   &kp DE_CARET
-        &kp TAB          &kp DE_LESS_THAN &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
+        &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp ESC          &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
-        &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
+        &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &kp DE_LESS_THAN                                         &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
         &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp LEFT         &kp RIGHT                               &kp BSPC         &sk LSHIFT       &sl 4            &kp RCTRL           &kp ENTER       &kp SPACE                             &kp UP           &kp DOWN         &kp DE_6         &kp DE_HASH      &mo 2
       >;
     };
