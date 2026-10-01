@@ -523,11 +523,11 @@
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
      *   top              ,   .                 f   =   *   /   +
-     *   home         4   5   6  [U]                1   0   2   9  (0)
-     *   bottom      (1)  <   >                     3   7   8   -   :
+     *   home         9   5   6  [U]            -   1   0   2   3  (0)
+     *   bottom      (1)  <   >                     4   7   :   8
      *   arrow           (5)                               (6)
      *
-     *   Direct operators: Base G =, C *, R /, Q <, J >; L +, Z - and ü :.
+     *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D - and V :.
      *   Base F stays f for float literals such as 0.5f. Empty letter keys
      *   do nothing. Number row, Tab, Del, arrows, # and thumb controls keep
      *   their usual functions. Enter is plain Enter here, without Edit hold.
@@ -539,8 +539,8 @@
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
         &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
-        &trans           &kp DE_4         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &none            &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_9         &trans
-        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &none            &kp DE_3         &kp DE_7         &kp DE_8         &kp DE_MINUS     &kp DE_COLON
+        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
+        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &none            &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &none
         &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
