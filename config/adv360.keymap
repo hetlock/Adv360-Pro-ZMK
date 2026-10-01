@@ -294,6 +294,13 @@
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
+ &eh 6 ENTER             | Tap: Enter. Hold 220 ms: Edit layer (6).
+ &cpp_scope              | Types :: (Red + Base K).
+ &cpp_not_equal          | Types != (Red + Base 0).
+ &cpp_logical_and        | Types && (Red + Base 6).
+ &cpp_logical_or         | Types || (Red + Base ae/umlaut key).
+ &cpp_less_equal         | Types <= (Red + Up).
+ &cpp_greater_equal      | Types >= (Red + Down).
  &sqt_dqt                | Types '; with Shift it types ".
 
  <  is on the Esc position (Shift: >). Esc = symbol key (Red), then that key.
@@ -302,7 +309,7 @@
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Num (hold U, purple LED), 6 = Cyan, 7 = Yellow.
+   5 = Num (hold U, purple LED), 6 = Edit (hold Enter, cyan LED), 7 = Yellow.
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -348,6 +355,51 @@
             tap-ms = <10>;
             bindings = <&kp DE_COLON &kp DE_COLON>;
         };
+
+        // C++ operator: !=. Emits characters only; no cursor movement.
+        cpp_not_equal: cpp_not_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_EXCLAMATION &kp DE_EQUAL>;
+        };
+
+        // C++ operator: &&. Emits characters only; no cursor movement.
+        cpp_logical_and: cpp_logical_and {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_AMPERSAND &kp DE_AMPERSAND>;
+        };
+
+        // C++ operator: ||. Emits characters only; no cursor movement.
+        cpp_logical_or: cpp_logical_or {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_PIPE &kp DE_PIPE>;
+        };
+
+        // C++ operator: <=. Emits characters only; no cursor movement.
+        cpp_less_equal: cpp_less_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_LESS_THAN &kp DE_EQUAL>;
+        };
+
+        // C++ operator: >=. Emits characters only; no cursor movement.
+        cpp_greater_equal: cpp_greater_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_GREATER_THAN &kp DE_EQUAL>;
+        };
     };
 
     behaviors {
@@ -365,10 +417,10 @@
       };
 
       // Tap U = u, hold U = Num layer (5).
-      // The layer only switches on if the next key is on the right half,
-      // one of the left Num keys (8 4 5 6, Base 1 and 5) or Shift. So rolls
-      // like "you." "you," "you'll" or "you " always type u. While typing fast
-      // (less than 150 ms since the previous key) U is always just u.
+      // Before 280 ms, right-hand finger keys, the left Num digits, < and
+      // Shift can trigger a hold. Other first keys favor a tap instead.
+      // After the timeout, another key can activate Num regardless of position.
+      // U within 150 ms of another non-modifier key always resolves as u.
       hl: hold_layer {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
@@ -380,8 +432,21 @@
           hold-trigger-key-positions = <
               7 8 9 10 11 12 13  21 22 23 24 25 26 27  39 40 41 42 43 44 45
               54 55 56 57 58 59  71 72 73 74 75
-              28 29 30 31 47 62  66
+              28 29 30 31 47 48 62  66
           >;
+          bindings = <&mo>, <&kp>;
+      };
+
+      // Tap Enter normally; hold for 220 ms to use Edit (6, cyan LED).
+      // Tap-preferred avoids switching layers during quick Enter/letter rolls.
+      // A quick tap followed by holding Enter repeats Enter instead.
+      // Num and Red provide their own Enter bindings.
+      eh: enter_edit {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <220>;
+          quick-tap-ms = <175>;
           bindings = <&mo>, <&kp>;
       };
 
@@ -404,7 +469,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp LEFT         &kp RIGHT                               &kp BSPC         &sk LSHIFT       &sl 4            &kp RCTRL           &kp ENTER       &kp SPACE                             &kp UP           &kp DOWN         &kp DE_6         &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp LEFT         &kp RIGHT                               &kp BSPC         &sk LSHIFT       &sl 4            &kp RCTRL           &eh 6 ENTER     &kp SPACE                             &kp UP           &kp DOWN         &kp DE_6         &kp DE_HASH      &mo 2
       >;
     };
     keypad {
@@ -437,50 +502,65 @@
         &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &bl BL_TOG       &rgb_ug RGB_TOG                         &bl BL_INC       &bl BL_DEC       &none            &none            &none
       >;
     };
+    /* Red: hold the existing left symbol thumb key, then use these Base keys:
+     * E ;    G =    comma &    K ::    V _    Z -    1 !    5 %    L ?
+     * U ->   0 !=   6 &&       ae/umlaut ||   Up <=   Down >=   # Euro
+     * Existing () [] {} <> stay in place. Tilde remains on Base X.
+     * Left thumb remains occupied by Red; its other keys are not needed here.
+     */
     extra1 { 
       display-name = "Red";    
       bindings = <
         &none               &none               &none               &none               &none               &none               &none                                                                                                           &none               &none               &none               &none               &none                     &none                     &none
-        &none               &kp DE_PIPE         &kp DE_PLUS         &kp DE_COLON        &kp DE_PLUS         &none               &none                                                                                                           &none               &none               &none               &kp DE_LEFT_BRACKET &kp DE_RIGHT_BRACKET      &none                     &none
-        &kp ESC             &kp DE_SLASH        &kp DE_BACKSLASH    &kp DE_EURO         &cpp_deref_de       &kp DE_ASTERISK     &none                     &none               &none               &none               &none                     &none               &none               &kp DE_LEFT_BRACE   &kp DE_RIGHT_BRACE  &kp DE_LEFT_PARENTHESIS   &kp DE_RIGHT_PARENTHESIS  &none
-        &none               &none               &kp DE_AT           &kp DE_ASTERISK     &none               &kp DE_TILDE                                                      &none               &none                                                             &none               &kp DE_LESS_THAN    &kp DE_GREATER_THAN &none                     &none                     &none
-        &none               &kp DE_TILDE        &none               &none               &none                                         &none               &sl RC(LSHIFT)      &none               &none               &kp RC(ENTER)       &none                                         &none               &none               &kp DE_TILDE              &kp DE_TILDE              &none
+        &none               &kp DE_PIPE         &kp DE_AMPERSAND    &kp DE_COLON        &kp DE_PLUS         &none               &none                                                                                                           &none               &none               &kp DE_EQUAL        &kp DE_LEFT_BRACKET &kp DE_RIGHT_BRACKET      &kp DE_QUESTION           &none
+        &kp ESC             &kp DE_SLASH        &kp DE_BACKSLASH    &kp DE_SEMICOLON    &cpp_deref_de       &kp DE_ASTERISK     &none                     &none               &none               &none               &none                     &none               &none               &kp DE_LEFT_BRACE   &kp DE_RIGHT_BRACE  &kp DE_LEFT_PARENTHESIS   &kp DE_RIGHT_PARENTHESIS  &cpp_not_equal
+        &none               &kp DE_EXCLAMATION  &kp DE_AT           &kp DE_ASTERISK     &cpp_scope          &kp DE_TILDE                                                      &none               &none                                                             &none               &kp DE_LESS_THAN    &kp DE_GREATER_THAN &kp DE_UNDERSCORE         &kp DE_MINUS              &none
+        &none               &cpp_logical_or     &kp DE_PERCENT      &none               &none                                         &none               &sl RC(LSHIFT)      &none               &none               &kp RC(ENTER)       &none                                         &cpp_less_equal     &cpp_greater_equal  &cpp_logical_and          &kp DE_EURO               &none
       >;
     };
 
     /* Num layer: hold U (left index finger). A tap on U still types u.
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
-     *   top              ,   .                                 +
+     *   top              ,   .                 f   =   *   /   +
      *   home     8   4   5   6  [U]                1   0   2   9  (0)
-     *   bottom      (1)      :                     3   7       -
+     *   bottom      (1)  <   :                     3   7   >   -
      *   arrow           (5)                               (6)
      *
-     *   (x) = same key as on Base. Empty letter keys do nothing. All other
-     *   keys (number row, Tab, Del, arrows, # and every thumb key) work as on
-     *   Base, so Space, Enter, Backspace and Shift can be used while U is
-     *   held. Shift + digit gives the German symbol of that digit:
+     *   Direct operators: Base G =, C *, R /, Q <, V >; L + and Z -.
+     *   Base F stays f for float literals such as 0.5f. Empty letter keys
+     *   do nothing. Number row, Tab, Del, arrows, # and thumb controls keep
+     *   their usual functions. Enter is plain Enter here, without Edit hold.
+     *   (x) = same key as on Base. Shift + digit gives its German symbol:
      *   Shift+0 =   Shift+1 !   Shift+5 %   Shift+7 /   Shift+8 (   Shift+9 )
      */
     extra2 {
       display-name = "Num";
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &none            &none            &none            &none            &kp DE_PLUS      &none
+        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
         &kp DE_8         &kp DE_4         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &none            &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_9         &trans
-        &trans           &trans           &none            &kp DE_COLON     &none            &none                                                    &trans           &trans                                                   &none            &kp DE_3         &kp DE_7         &none            &kp DE_MINUS     &none
-        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &kp DE_LESS_THAN &kp DE_COLON     &none            &none                                                    &trans           &trans                                                   &none            &kp DE_3         &kp DE_7         &kp DE_GREATER_THAN &kp DE_MINUS     &none
+        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 
+    /* Edit: hold the right Enter thumb key for 220 ms, then use Base keys.
+     * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
+     * Right home: H definition, T back, N rename, S toggle line comment.
+     * Right upper: G references, C quick fix, R next problem.
+     * F13-F19 are mapped in VS Code; see config/vscode-keybindings.json.
+     * Esc is at the original Esc position. Unused letter keys do nothing.
+     * Release Enter to return. A normal tap still sends Enter.
+     */
     extra3 { 
-      display-name = "Cyan";    
+      display-name = "Edit";
       bindings = <
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &kp F19          &none            &none
+        &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &none            &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &kp F15          &kp F16          &trans
+        &trans           &trans           &none            &none            &none            &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 
