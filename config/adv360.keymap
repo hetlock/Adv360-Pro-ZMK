@@ -295,7 +295,7 @@
  &cpp_deref_de           | Run the custom macro that types ->.
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
  &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
- &mo 6 (key above Enter) | Hold: Edit layer (6). AltGr moved to the old Win key.
+ &he 6 DE_H              | Tap: h. Hold: Edit layer (6), like U for Num.
  &cpp_scope              | Types :: (Red + Base K).
  &cpp_not_equal          | Types != (Red + Base I).
  &cpp_logical_and        | Types && (Red + Base 0).
@@ -311,7 +311,7 @@
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold the key above Enter, cyan LED), 7 = Yellow.
+   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold H, cyan LED), 7 = Yellow.
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -432,6 +432,24 @@
 
 
       // ' and, with Shift, " (like on an English keyboard)
+      // Tap H = h, hold H = Edit layer (6). Same safety timing as U; the
+      // layer only switches on if the next key is on the left half, one of
+      // the right Edit keys (T N S C R) or a modifier thumb key.
+      he: hold_edit {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "balanced";
+          tapping-term-ms = <280>;
+          quick-tap-ms = <175>;
+          require-prior-idle-ms = <150>;
+          retro-tap;
+          hold-trigger-key-positions = <
+              14 15 16 17 18 19  28 29 30 31 32 33  46 47 48 49 50 51
+              24 25 42 43 44  35 36 65 66 67
+          >;
+          bindings = <&mo>, <&kp>;
+      };
+
       // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
       td_shift: tap_dance_shift {
           compatible = "zmk,behavior-tap-dance";
@@ -456,7 +474,7 @@
       bindings = <
         &kp F2           &kp DE_MINUS     &kp DE_2         &kp DE_3         &kp DE_4         &kp DE_PLUS      &tog 1                                                                                           &mo 3            &kp DE_U_UMLAUT  &kp DE_7         &kp DE_8         &kp DE_9         &kp DE_SHARP_S   &kp DE_CARET
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
-        &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp RALT            &mo 6               &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
+        &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &he 6 DE_H       &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
         &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp DE_SEMICOLON &kp DE_EQUAL                               &kp BSPC         &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &kp DE_LEFT_PARENTHESIS &kp DE_RIGHT_PARENTHESIS       &kp DE_6         &kp DE_HASH      &mo 2
       >;
@@ -539,10 +557,11 @@
       >;
     };
 
-    /* Edit: hold the small right thumb key above Enter (was AltGr).
+    /* Edit: hold H (right index). A tap on H still types h.
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
-     * Right home: H definition, T back, N rename, S toggle line comment.
-     * Right upper: G references, C quick fix, R next problem.
+     * Right home: T back, N rename, S toggle line comment.
+     * Right upper: C quick fix, R next problem.
+     * Left index (H is held): I definition, P references.
      * F13-F19 are mapped in VS Code; see config/vscode-keybindings.json.
      * Esc is at the original Esc position. Unused letter keys do nothing.
      * Release the key to return.
@@ -551,8 +570,8 @@
       display-name = "Edit";
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &kp F19          &none            &none
-        &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &none            &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &kp F15          &kp F16          &trans
+        &trans           &none            &none            &none            &kp F17          &none            &none                                                                                            &none            &none            &none            &kp F18          &kp F19          &none            &none
+        &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp F13          &none                  &trans           &trans           &trans           &trans                 &none            &none            &trans           &kp F14          &kp F15          &kp F16          &trans
         &trans           &trans           &none            &none            &none            &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
         &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
