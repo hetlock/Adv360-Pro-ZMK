@@ -299,7 +299,7 @@
  &hs 6 SPACE             | Tap: space. Hold 200 ms: Edit layer (6). Tap+hold: repeat.
  &cpp_scope              | Types :: (Red + Base M).
  &cpp_not_equal          | Types != (Red + Base Z).
- &cpp_logical_and        | Types && (Red + Base I).
+ &cpp_logical_and        | Types && (Red + Base L).
  &cpp_logical_or         | Types || (Red + Base 1).
  &cpp_less_equal         | Types <= (Red + Base ,).
  &cpp_greater_equal      | Types >= (Red + Base D).
@@ -575,8 +575,8 @@
      * English; bracket pairs side by side (also on the Base arrow-row keys).
      *
      *          out pnk rng mid idx in            in  idx mid rng pnk out
-     *   top            <=   [   ]                 #   ?   "   %
-     *   home   Esc  {   }   -   _  &&            >=   (   )   /   *   +
+     *   top            <=   [   ]                 #   ?   "   %  &&
+     *   home   Esc  {   }   -   _  Tab            >=   (   )   /   *   +
      *   bottom     ||  ->   &   :   \             ~  ::   <   >  !=   ß
      *   arrow           ö   $   @                     €   |   !
      *
@@ -586,8 +586,8 @@
       display-name = "Red";
       bindings = <
         &none                    &none                    &none                    &none                    &none                    &none                    &none  &none                    &none                    &none                    &none                    &none                    &none                    &none
-        &none                    &none                    &cpp_less_equal          &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none                    &none  &none                    &kp DE_HASH              &kp DE_QUESTION          &kp DE_DOUBLE_QUOTES     &kp DE_PERCENT           &none                    &none
-        &kp ESC                  &kp DE_LEFT_BRACE        &kp DE_RIGHT_BRACE       &kp DE_MINUS             &kp DE_UNDERSCORE        &cpp_logical_and         &none  &none                    &none                    &none                    &none                    &none                    &cpp_greater_equal       &kp DE_LEFT_PARENTHESIS  &kp DE_RIGHT_PARENTHESIS &kp DE_SLASH             &kp DE_ASTERISK          &kp DE_PLUS
+        &none                    &none                    &cpp_less_equal          &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none                    &none  &none                    &kp DE_HASH              &kp DE_QUESTION          &kp DE_DOUBLE_QUOTES     &kp DE_PERCENT           &cpp_logical_and         &none
+        &kp ESC                  &kp DE_LEFT_BRACE        &kp DE_RIGHT_BRACE       &kp DE_MINUS             &kp DE_UNDERSCORE        &kp TAB                  &none  &none                    &none                    &none                    &none                    &none                    &cpp_greater_equal       &kp DE_LEFT_PARENTHESIS  &kp DE_RIGHT_PARENTHESIS &kp DE_SLASH             &kp DE_ASTERISK          &kp DE_PLUS
         &none                    &cpp_logical_or          &cpp_deref_de            &kp DE_AMPERSAND         &kp DE_COLON             &kp DE_BACKSLASH  &none                    &none                    &kp DE_TILDE             &cpp_scope               &kp DE_LESS_THAN         &kp DE_GREATER_THAN      &cpp_not_equal           &kp DE_SHARP_S
         &none                    &none                    &kp DE_O_UMLAUT          &kp DE_DOLLAR            &kp DE_AT &none                    &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &none                    &kp DE_EURO              &kp DE_PIPE              &kp DE_EXCLAMATION       &none                    &none
       >;
@@ -597,7 +597,7 @@
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
      *   top              ,   .                 f   =   *   /   +
-     *   home         9   5   6  [U]            -   1   0   2   3  (0)
+     *   home         9   5   6  [U] Tab        -   1   0   2   3  (0)
      *   bottom      (1)  <   >                 ?   4   7   :   8
      *   arrow           (5)                               (6)
      *
@@ -613,7 +613,7 @@
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
         &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
-        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
+        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &kp TAB          &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
         &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &none
         &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
