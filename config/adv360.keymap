@@ -305,7 +305,7 @@
  &sqt_dqt                | Types '; with Shift it types ".
  &td_shift               | Tap: sticky Shift. Double-tap: Caps Word.
  &bspc_del               | Backspace; Shift + Backspace = Delete.
- &semi_colon &equal_plus | Old arrow keys: ; = (with Shift : +).
+ &semi_bracket &equal_bracket | Old arrow keys: ; = (with Shift [ ]).
  &paren_brace_l/_r       | Old arrow keys: ( ) (with Shift { }).
 
  <  is on the Esc position (Shift: >). Esc = symbol key (Red), then that key.
@@ -463,19 +463,19 @@
           mods = <(MOD_LSFT|MOD_RSFT)>;
       };
 
-      // ; and, with Shift, : (old arrow-key position)
-      semi_colon: semi_colon {
+      // ; and, with Shift, [ (old arrow-key position)
+      semi_bracket: semi_bracket {
           compatible = "zmk,behavior-mod-morph";
           #binding-cells = <0>;
-          bindings = <&kp DE_SEMICOLON>, <&kp DE_COLON>;
+          bindings = <&kp DE_SEMICOLON>, <&kp DE_LEFT_BRACKET>;
           mods = <(MOD_LSFT|MOD_RSFT)>;
       };
 
-      // = and, with Shift, + (old arrow-key position)
-      equal_plus: equal_plus {
+      // = and, with Shift, ] (old arrow-key position)
+      equal_bracket: equal_bracket {
           compatible = "zmk,behavior-mod-morph";
           #binding-cells = <0>;
-          bindings = <&kp DE_EQUAL>, <&kp DE_PLUS>;
+          bindings = <&kp DE_EQUAL>, <&kp DE_RIGHT_BRACKET>;
           mods = <(MOD_LSFT|MOD_RSFT)>;
       };
 
@@ -521,7 +521,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_colon      &equal_plus                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
       >;
     };
     /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
