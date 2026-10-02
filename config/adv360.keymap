@@ -490,14 +490,18 @@
         &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp DE_SEMICOLON &kp DE_EQUAL                               &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &kp DE_LEFT_PARENTHESIS &kp DE_RIGHT_PARENTHESIS       &he 6 DE_6       &kp DE_HASH      &mo 2
       >;
     };
+    /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
+     * Symbol keys use the DE_ names so they type what the label says on
+     * German Windows: = - \ ' ` ] (US codes typed ´ ß # ä ^ +).
+     */
     keypad {
       display-name = "Kp";
       bindings = <
-        &kp EQUAL        &kp N1           &kp N2           &kp N3           &kp N4     &kp N5           &trans                                                                                                 &mo 3            &kp N6           &kp KP_NUM       &kp KP_EQUAL     &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp MINUS
-        &kp TAB          &kp Q            &kp W            &kp E            &kp R      &kp T            &none                                                                                                  &none            &kp Y            &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &kp BSLH
-        &kp ESC          &kp A            &kp S            &kp D            &kp F            &kp G            &none                  &kp LCTRL        &kp LALT         &kp LGUI         &kp RCTRL              &none            &kp H            &kp KP_N4        &kp KP_N5        &kp KP_N6        &kp KP_PLUS      &kp SQT
+        &kp DE_EQUAL     &kp N1           &kp N2           &kp N3           &kp N4     &kp N5           &trans                                                                                                 &mo 3            &kp N6           &kp KP_NUM       &kp KP_EQUAL     &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp DE_MINUS
+        &kp TAB          &kp Q            &kp W            &kp E            &kp R      &kp T            &none                                                                                                  &none            &kp Y            &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &kp DE_BACKSLASH
+        &kp ESC          &kp A            &kp S            &kp D            &kp F            &kp G            &none                  &kp LCTRL        &kp LALT         &kp LGUI         &kp RCTRL              &none            &kp H            &kp KP_N4        &kp KP_N5        &kp KP_N6        &kp KP_PLUS      &kp DE_SINGLE_QUOTE
         &kp LSHFT        &kp Z            &kp X            &kp C            &kp V            &kp B                                                    &kp END          &kp PG_UP                                                &kp N            &kp KP_N1        &kp KP_N2        &kp KP_N3        &kp KP_ENTER     &kp RSHFT
-        &mo 2            &kp GRAVE        &kp CAPS         &kp LEFT         &kp RIGHT                               &kp BSPC         &kp DEL          &kp END          &kp PG_DN        &kp ENTER        &kp KP_N0                               &kp UP           &kp DOWN         &kp KP_DOT       &kp RBKT         &mo 2
+        &mo 2            &kp DE_GRAVE     &kp CAPS         &kp LEFT         &kp RIGHT                               &kp BSPC         &kp DEL          &kp END          &kp PG_DN        &kp ENTER        &kp KP_N0                               &kp UP           &kp DOWN         &kp KP_DOT       &kp DE_RIGHT_BRACKET &mo 2
       >;
     };
     fn {
