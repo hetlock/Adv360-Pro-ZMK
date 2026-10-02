@@ -296,12 +296,12 @@
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
  &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
  &he 6 DE_6              | Tap: 6. Hold: Edit layer (6), like U for Num.
- &cpp_scope              | Types :: (Red + Base K).
- &cpp_not_equal          | Types != (Red + Base I).
- &cpp_logical_and        | Types && (Red + Base 0).
- &cpp_logical_or         | Types || (Red + Base ) key).
- &cpp_less_equal         | Types <= (Red + Base ,).
- &cpp_greater_equal      | Types >= (Red + Base D).
+ &cpp_scope              | Types :: (Red + Base N).
+ &cpp_not_equal          | Types != (Red + Base 0).
+ &cpp_logical_and        | Types && (Red + Base 6).
+ &cpp_logical_or         | Types || (Red + Base 5).
+ &cpp_less_equal         | Types <= (Red + Base ; key).
+ &cpp_greater_equal      | Types >= (Red + Base 1).
  &sqt_dqt                | Types '; with Shift it types ".
  &td_shift               | Tap: sticky Shift. Double-tap: Caps Word.
  &bspc_del               | Backspace; Shift + Backspace = Delete.
@@ -559,13 +559,13 @@
       >;
     };
     /* Red (symbol key, then a key). Placed by symbol frequency in C++ and
-     * English: ( ) ; = on home-row keys, bracket pairs side by side.
+     * English. ( ) ; = [ ] { } are on the Base arrow-row keys, so not here.
      *
      *          out pnk rng mid idx in            in  idx mid rng pnk out
-     *   top            <=   <   >                     |   &   @
-     *   home   Esc  *   _   =   ;  !=            >=   (   )   /   :  &&
-     *   bottom  %   \   !   -  ::   ~             €   {   }   [   ]
-     *   arrow          ->   ?                            ||   +
+     *   top                 #   €                     $   !
+     *   home   Esc  &   :   -   /   @             %   _   *  ::   "  !=
+     *   bottom     >=   ?   +  ->                     <   >   \   ~
+     *   arrow          ||  <=                             |  &&
      *
      *   Shift thumb = sticky Ctrl+Shift, Enter thumb = Ctrl+Enter.
      */
@@ -573,10 +573,10 @@
       display-name = "Red";
       bindings = <
         &none                    &none                    &none                    &none                    &none                    &none                    &none  &none                    &none                    &none                    &none                    &none                    &none                    &none
-        &none                    &none                    &cpp_less_equal          &kp DE_LESS_THAN         &kp DE_GREATER_THAN      &none                    &none  &none                    &none                    &kp DE_PIPE              &kp DE_AMPERSAND         &kp DE_AT                &none                    &none
-        &kp ESC                  &kp DE_ASTERISK          &kp DE_UNDERSCORE        &kp DE_EQUAL             &kp DE_SEMICOLON         &cpp_not_equal           &none  &none                    &none                    &none                    &none                    &none                    &cpp_greater_equal       &kp DE_LEFT_PARENTHESIS  &kp DE_RIGHT_PARENTHESIS &kp DE_SLASH             &kp DE_COLON             &cpp_logical_and
-        &kp DE_PERCENT           &kp DE_BACKSLASH         &kp DE_EXCLAMATION       &kp DE_MINUS             &cpp_scope               &kp DE_TILDE  &none                    &none                    &kp DE_EURO              &kp DE_LEFT_BRACE        &kp DE_RIGHT_BRACE       &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none
-        &none                    &none                    &cpp_deref_de            &kp DE_QUESTION          &none  &none                    &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &none                    &none                    &cpp_logical_or          &kp DE_PLUS              &none                    &none
+        &none                    &none                    &none                    &kp DE_HASH              &kp DE_EURO              &none                    &none  &none                    &none                    &kp DE_DOLLAR            &kp DE_EXCLAMATION       &none                    &none                    &none
+        &kp ESC                  &kp DE_AMPERSAND         &kp DE_COLON             &kp DE_MINUS             &kp DE_SLASH             &kp DE_AT                &none  &none                    &none                    &none                    &none                    &none                    &kp DE_PERCENT           &kp DE_UNDERSCORE        &kp DE_ASTERISK          &cpp_scope               &kp DE_DOUBLE_QUOTES     &cpp_not_equal
+        &none                    &cpp_greater_equal       &kp DE_QUESTION          &kp DE_PLUS              &cpp_deref_de            &none  &none                    &none                    &none                    &kp DE_LESS_THAN         &kp DE_GREATER_THAN      &kp DE_BACKSLASH         &kp DE_TILDE             &none
+        &none                    &none                    &cpp_logical_or          &cpp_less_equal          &none  &none                    &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &none                    &none                    &kp DE_PIPE              &cpp_logical_and         &none                    &none
       >;
     };
 
