@@ -294,7 +294,8 @@
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
- &eh 6 ENTER             | Tap: Enter. Hold 220 ms: Edit layer (6).
+ &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
+ &mo 6 (right Ctrl key)  | Hold: Edit layer (6). Right Ctrl is gone; use left Ctrl.
  &cpp_scope              | Types :: (Red + Base K).
  &cpp_not_equal          | Types != (Red + Base I).
  &cpp_logical_and        | Types && (Red + Base 0).
@@ -310,7 +311,7 @@
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Num (hold U, purple LED), 6 = Edit (hold Enter, cyan LED), 7 = Yellow.
+   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold right Ctrl key, cyan LED), 7 = Yellow.
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -429,18 +430,6 @@
           bindings = <&mo>, <&kp>;
       };
 
-      // Tap Enter normally; hold for 220 ms to use Edit (6, cyan LED).
-      // Tap-preferred avoids switching layers during quick Enter/letter rolls.
-      // A quick tap followed by holding Enter repeats Enter instead.
-      // Num and Red provide their own Enter bindings.
-      eh: enter_edit {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <220>;
-          quick-tap-ms = <175>;
-          bindings = <&mo>, <&kp>;
-      };
 
       // ' and, with Shift, " (like on an English keyboard)
       // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
@@ -469,7 +458,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp DE_SEMICOLON &kp DE_EQUAL                               &kp BSPC         &td_shift        &sl 4            &kp RCTRL           &eh 6 ENTER     &kp SPACE                             &kp DE_LEFT_PARENTHESIS &kp DE_RIGHT_PARENTHESIS       &kp DE_6         &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp DE_SEMICOLON &kp DE_EQUAL                               &kp BSPC         &td_shift        &sl 4            &mo 6               &hl 5 ENTER     &kp SPACE                             &kp DE_LEFT_PARENTHESIS &kp DE_RIGHT_PARENTHESIS       &kp DE_6         &kp DE_HASH      &mo 2
       >;
     };
     keypad {
@@ -524,7 +513,7 @@
       >;
     };
 
-    /* Num layer: hold U (left index finger). A tap on U still types u.
+    /* Num layer: hold U (left index) or Enter (right thumb); a tap types u / Enter.
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
      *   top              ,   .                 f   =   *   /   +
@@ -535,7 +524,7 @@
      *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D - and V :.
      *   Base F stays f for float literals such as 0.5f. Empty letter keys
      *   do nothing. Number row, Tab, Del, ; = ( ), # and thumb controls keep
-     *   their usual functions. Enter is plain Enter here, without Edit hold.
+     *   their usual functions. Holding Enter also opens this layer.
      *   (x) = same key as on Base. Shift + digit gives its German symbol:
      *   Shift+0 =   Shift+1 !   Shift+5 %   Shift+7 /   Shift+8 (   Shift+9 )
      */
@@ -550,13 +539,13 @@
       >;
     };
 
-    /* Edit: hold the right Enter thumb key for 220 ms, then use Base keys.
+    /* Edit: hold the small right thumb key next to Enter (was right Ctrl).
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
      * Right home: H definition, T back, N rename, S toggle line comment.
      * Right upper: G references, C quick fix, R next problem.
      * F13-F19 are mapped in VS Code; see config/vscode-keybindings.json.
      * Esc is at the original Esc position. Unused letter keys do nothing.
-     * Release Enter to return. A normal tap still sends Enter.
+     * Release the key to return.
      */
     extra3 { 
       display-name = "Edit";
