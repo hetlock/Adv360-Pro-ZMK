@@ -293,12 +293,28 @@
  Example                 | Meaning
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
+ &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
+ &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
+ &he 6 DE_6              | Tap: 6. Hold: Edit layer (6), like U for Num.
+ &cpp_scope              | Types :: (Red + Base M).
+ &cpp_not_equal          | Types != (Red + Base Z).
+ &cpp_logical_and        | Types && (Red + Base I).
+ &cpp_logical_or         | Types || (Red + Base 1).
+ &cpp_less_equal         | Types <= (Red + Base ,).
+ &cpp_greater_equal      | Types >= (Red + Base D).
+ &sqt_dqt                | Types '; with Shift it types ".
+ &td_shift               | Tap: sticky Shift. Double-tap: Caps Word.
+ &bspc_del               | Backspace; Shift + Backspace = Delete.
+ &semi_bracket &equal_bracket | Old arrow keys: ; = (with Shift [ ]).
+ &paren_brace_l/_r       | Old arrow keys: ( ) (with Shift { }).
+
+ <  is on the Esc position (Shift: >). Esc = symbol key (Red), then that key.
 
  NOTES
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Purple, 6 = Cyan, 7 = Yellow.
+   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold the Base 6 key, cyan LED), 7 = Yellow.
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -344,20 +360,154 @@
             tap-ms = <10>;
             bindings = <&kp DE_COLON &kp DE_COLON>;
         };
+
+        // C++ operator: !=. Emits characters only; no cursor movement.
+        cpp_not_equal: cpp_not_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_EXCLAMATION &kp DE_EQUAL>;
+        };
+
+        // C++ operator: &&. Emits characters only; no cursor movement.
+        cpp_logical_and: cpp_logical_and {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_AMPERSAND &kp DE_AMPERSAND>;
+        };
+
+        // C++ operator: ||. Emits characters only; no cursor movement.
+        cpp_logical_or: cpp_logical_or {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_PIPE &kp DE_PIPE>;
+        };
+
+        // C++ operator: <=. Emits characters only; no cursor movement.
+        cpp_less_equal: cpp_less_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_LESS_THAN &kp DE_EQUAL>;
+        };
+
+        // C++ operator: >=. Emits characters only; no cursor movement.
+        cpp_greater_equal: cpp_greater_equal {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <10>;
+            tap-ms = <10>;
+            bindings = <&kp DE_GREATER_THAN &kp DE_EQUAL>;
+        };
     };
 
     behaviors {
       #include "macros.dtsi"
       #include "version.dtsi"
 
-      hm: homerow_mods {
+
+      // Tap U = u, hold U = Num layer (5).
+      // Before 280 ms, right-hand finger keys, the left Num digits, < and
+      // Shift can trigger a hold. Other first keys favor a tap instead.
+      // After the timeout, another key can activate Num regardless of position.
+      // U within 150 ms of another non-modifier key always resolves as u.
+      hl: hold_layer {
           compatible = "zmk,behavior-hold-tap";
-          label = "HOMEROW_MODS";
           #binding-cells = <2>;
+          flavor = "balanced";
+          tapping-term-ms = <280>;
+          quick-tap-ms = <175>;
+          require-prior-idle-ms = <150>;
+          retro-tap;
+          hold-trigger-key-positions = <
+              7 8 9 10 11 12 13  21 22 23 24 25 26 27  39 40 41 42 43 44 45
+              54 55 56 57 58 59  71 72 73 74 75
+              29 30 31 47 48 62  66
+          >;
+          bindings = <&mo>, <&kp>;
+      };
+
+
+      // ' and, with Shift, " (like on an English keyboard)
+      // Tap 6 = 6, hold 6 (right ring, arrow row) = Edit layer (6). Same
+      // safety timing as U; the layer only switches on if the next key is
+      // on the left half, one of the right Edit keys (G C H T S) or a
+      // modifier thumb key.
+      he: hold_edit {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "balanced";
+          tapping-term-ms = <280>;
+          quick-tap-ms = <175>;
+          require-prior-idle-ms = <150>;
+          retro-tap;
+          hold-trigger-key-positions = <
+              14 15 16 17 18 19  28 29 30 31 32 33  46 47 48 49 50 51  63 64
+              23 24 41 42 44  35 36 65 66 67
+          >;
+          bindings = <&mo>, <&kp>;
+      };
+
+      // Backspace; with Shift it is Delete (forward delete). Shift itself is
+      // not sent with Delete, so it never becomes Shift+Delete (cut).
+      bspc_del: backspace_delete {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp BSPC>, <&kp DEL>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
+
+      // ; and, with Shift, [ (old arrow-key position)
+      semi_bracket: semi_bracket {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_SEMICOLON>, <&kp DE_LEFT_BRACKET>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
+
+      // = and, with Shift, ] (old arrow-key position)
+      equal_bracket: equal_bracket {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_EQUAL>, <&kp DE_RIGHT_BRACKET>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
+
+      // ( and, with Shift, { (old arrow-key position)
+      paren_brace_l: paren_brace_l {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_LEFT_PARENTHESIS>, <&kp DE_LEFT_BRACE>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
+
+      // ) and, with Shift, } (old arrow-key position)
+      paren_brace_r: paren_brace_r {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_RIGHT_PARENTHESIS>, <&kp DE_RIGHT_BRACE>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
+      };
+
+      // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
+      td_shift: tap_dance_shift {
+          compatible = "zmk,behavior-tap-dance";
+          #binding-cells = <0>;
           tapping-term-ms = <200>;
-          quick_tap_ms = <175>;
-          flavor = "tap-preferred";
-          bindings = <&kp>, <&kp>;
+          bindings = <&sk LSHIFT>, <&caps_word>;
+      };
+
+      sqt_dqt: single_double_quote {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&kp DE_SINGLE_QUOTE>, <&kp DE_DOUBLE_QUOTES>;
+          mods = <(MOD_LSFT|MOD_RSFT)>;
       };
     };
 
@@ -368,20 +518,24 @@
       display-name = "Base";
       bindings = <
         &kp F2           &kp DE_MINUS     &kp DE_2         &kp DE_3         &kp DE_4         &kp DE_PLUS      &tog 1                                                                                           &mo 3            &kp DE_U_UMLAUT  &kp DE_7         &kp DE_8         &kp DE_9         &kp DE_SHARP_S   &kp DE_CARET
-        &kp TAB          &kp DE_LESS_THAN &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
-        &kp ESC          &kp DE_A         &kp DE_O         &kp DE_E         &kp DE_U         &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
+        &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
+        &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &kp LEFT         &kp RIGHT                               &kp BSPC         &sk LSHIFT       &sl 4            &kp RCTRL           &kp ENTER       &kp SPACE                             &kp UP           &kp DOWN         &kp DE_6         &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
       >;
     };
+    /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
+     * Symbol keys use the DE_ names so they type what the label says on
+     * German Windows: = - \ ' ` ] (US codes typed ´ ß # ä ^ +).
+     */
     keypad {
       display-name = "Kp";
       bindings = <
-        &kp EQUAL        &kp N1           &kp N2           &kp N3           &kp N4     &kp N5           &trans                                                                                                 &mo 3            &kp N6           &kp KP_NUM       &kp KP_EQUAL     &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp MINUS
-        &kp TAB          &kp Q            &kp W            &kp E            &kp R      &kp T            &none                                                                                                  &none            &kp Y            &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &kp BSLH
-        &kp ESC          &kp A            &kp S            &kp D            &kp F            &kp G            &none                  &kp LCTRL        &kp LALT         &kp LGUI         &kp RCTRL              &none            &kp H            &kp KP_N4        &kp KP_N5        &kp KP_N6        &kp KP_PLUS      &kp SQT
+        &kp DE_EQUAL     &kp N1           &kp N2           &kp N3           &kp N4     &kp N5           &trans                                                                                                 &mo 3            &kp N6           &kp KP_NUM       &kp KP_EQUAL     &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp DE_MINUS
+        &kp TAB          &kp Q            &kp W            &kp E            &kp R      &kp T            &none                                                                                                  &none            &kp Y            &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &kp DE_BACKSLASH
+        &kp ESC          &kp A            &kp S            &kp D            &kp F            &kp G            &none                  &kp LCTRL        &kp LALT         &kp LGUI         &kp RCTRL              &none            &kp H            &kp KP_N4        &kp KP_N5        &kp KP_N6        &kp KP_PLUS      &kp DE_SINGLE_QUOTE
         &kp LSHFT        &kp Z            &kp X            &kp C            &kp V            &kp B                                                    &kp END          &kp PG_UP                                                &kp N            &kp KP_N1        &kp KP_N2        &kp KP_N3        &kp KP_ENTER     &kp RSHFT
-        &mo 2            &kp GRAVE        &kp CAPS         &kp LEFT         &kp RIGHT                               &kp BSPC         &kp DEL          &kp END          &kp PG_DN        &kp ENTER        &kp KP_N0                               &kp UP           &kp DOWN         &kp KP_DOT       &kp RBKT         &mo 2
+        &mo 2            &kp DE_GRAVE     &kp CAPS         &kp LEFT         &kp RIGHT                               &kp BSPC         &kp DEL          &kp END          &kp PG_DN        &kp ENTER        &kp KP_N0                               &kp UP           &kp DOWN         &kp KP_DOT       &kp DE_RIGHT_BRACKET &mo 2
       >;
     };
     fn {
@@ -404,36 +558,73 @@
         &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &bl BL_TOG       &rgb_ug RGB_TOG                         &bl BL_INC       &bl BL_DEC       &none            &none            &none
       >;
     };
-    extra1 { 
-      display-name = "Red";    
+    /* Red (symbol key, then a key). Placed by symbol frequency in C++ and
+     * English; bracket pairs side by side (also on the Base arrow-row keys).
+     *
+     *          out pnk rng mid idx in            in  idx mid rng pnk out
+     *   top            <=   [   ]                 #   ?   "   %
+     *   home   Esc  {   }   -   _  &&            >=   (   )   /   *   +
+     *   bottom     ||  ->   &   :   \             ~  ::   <   >  !=   ß
+     *   arrow           ö   $   @                     €   |   !
+     *
+     *   Shift thumb = sticky Ctrl+Shift, Enter thumb = Ctrl+Enter.
+     */
+    extra1 {
+      display-name = "Red";
       bindings = <
-        &none               &none               &none               &none               &none               &none               &none                                                                                                           &none               &none               &none               &none               &none                     &none                     &none
-        &none               &kp DE_PIPE         &kp DE_PLUS         &kp DE_COLON        &kp DE_PLUS         &none               &none                                                                                                           &none               &none               &none               &kp DE_LEFT_BRACKET &kp DE_RIGHT_BRACKET      &none                     &none
-        &none               &kp DE_SLASH        &kp DE_BACKSLASH    &kp DE_EURO         &cpp_deref_de       &kp DE_ASTERISK     &none                     &none               &none               &none               &none                     &none               &none               &kp DE_LEFT_BRACE   &kp DE_RIGHT_BRACE  &kp DE_LEFT_PARENTHESIS   &kp DE_RIGHT_PARENTHESIS  &none
-        &none               &none               &kp DE_AT           &kp DE_ASTERISK     &none               &kp DE_TILDE                                                      &none               &none                                                             &none               &none               &none               &none                     &none                     &none
-        &none               &kp DE_TILDE        &none               &none               &none                                         &none               &sl RC(LSHIFT)      &none               &none               &kp RC(ENTER)       &none                                         &none               &none               &kp DE_TILDE              &kp DE_TILDE              &none
+        &none                    &none                    &none                    &none                    &none                    &none                    &none  &none                    &none                    &none                    &none                    &none                    &none                    &none
+        &none                    &none                    &cpp_less_equal          &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none                    &none  &none                    &kp DE_HASH              &kp DE_QUESTION          &kp DE_DOUBLE_QUOTES     &kp DE_PERCENT           &none                    &none
+        &kp ESC                  &kp DE_LEFT_BRACE        &kp DE_RIGHT_BRACE       &kp DE_MINUS             &kp DE_UNDERSCORE        &cpp_logical_and         &none  &none                    &none                    &none                    &none                    &none                    &cpp_greater_equal       &kp DE_LEFT_PARENTHESIS  &kp DE_RIGHT_PARENTHESIS &kp DE_SLASH             &kp DE_ASTERISK          &kp DE_PLUS
+        &none                    &cpp_logical_or          &cpp_deref_de            &kp DE_AMPERSAND         &kp DE_COLON             &kp DE_BACKSLASH  &none                    &none                    &kp DE_TILDE             &cpp_scope               &kp DE_LESS_THAN         &kp DE_GREATER_THAN      &cpp_not_equal           &kp DE_SHARP_S
+        &none                    &none                    &kp DE_O_UMLAUT          &kp DE_DOLLAR            &kp DE_AT &none                    &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &none                    &kp DE_EURO              &kp DE_PIPE              &kp DE_EXCLAMATION       &none                    &none
       >;
     };
 
-    extra2 { 
-      display-name = "Purple";    
+    /* Num layer: hold U (left index) or Enter (right thumb); a tap types u / Enter.
+     *
+     *           out pnk rng mid idx           in  idx mid rng pnk out
+     *   top              ,   .                 f   =   *   /   +
+     *   home         9   5   6  [U]            -   1   0   2   3  (0)
+     *   bottom      (1)  <   >                 ?   4   7   :   8
+     *   arrow           (5)                               (6)
+     *
+     *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D -, B ? and V :.
+     *   Base F stays f for float literals such as 0.5f. Empty letter keys
+     *   do nothing. Number row, Tab, Del, ; = ( ), # and thumb controls keep
+     *   their usual functions. Holding Enter also opens this layer.
+     *   (x) = same key as on Base. Shift + digit gives its German symbol:
+     *   Shift+0 =   Shift+1 !   Shift+5 %   Shift+7 /   Shift+8 (   Shift+9 )
+     */
+    extra2 {
+      display-name = "Num";
       bindings = <
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
+        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
+        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &none
+        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 
+    /* Edit: hold the 6 key (right ring finger, arrow row). A tap types 6.
+     * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
+     * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
+     * Old arrow keys (left, bottom row): Left and Right as before.
+     * Right home: H definition, T back, S toggle line comment.
+     * Right upper: G references, C quick fix.
+     * Left upper (ring finger holds 6): , rename, . next problem.
+     * F13-F19 are mapped in VS Code; see config/vscode-keybindings.json.
+     * Esc is at the original Esc position. Unused letter keys do nothing.
+     * Release the key to return.
+     */
     extra3 { 
-      display-name = "Cyan";    
+      display-name = "Edit";
       bindings = <
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
+        &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
+        &trans           &trans           &none            &none            &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 
@@ -448,4 +639,10 @@
       >;
     };
   };
+};
+
+// Caps Word (double-tap Shift) keeps going through _ (German _ is Shift
+// plus the - key), Backspace and Delete; Space, Enter, . and , end it.
+&caps_word {
+    continue-list = <DE_UNDERSCORE BSPC DEL>;
 };

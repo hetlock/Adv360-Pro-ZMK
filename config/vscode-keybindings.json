@@ -1,0 +1,37 @@
+[
+    {
+        "key": "f13",
+        "command": "editor.action.revealDefinition",
+        "when": "editorTextFocus && editorHasDefinitionProvider"
+    },
+    {
+        "key": "f14",
+        "command": "workbench.action.navigateBack",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "f15",
+        "command": "editor.action.rename",
+        "when": "editorTextFocus && editorHasRenameProvider && !editorReadonly"
+    },
+    {
+        "key": "f16",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "f17",
+        "command": "editor.action.goToReferences",
+        "when": "editorTextFocus && editorHasReferenceProvider"
+    },
+    {
+        "key": "f18",
+        "command": "editor.action.quickFix",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "f19",
+        "command": "editor.action.marker.nextInFiles",
+        "when": "editorTextFocus"
+    }
+]
