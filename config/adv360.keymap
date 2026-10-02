@@ -296,6 +296,7 @@
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
  &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
  &he 6 DE_6              | Tap: 6. Hold: Edit layer (6), like U for Num.
+ &hs 6 SPACE             | Tap: space. Hold 200 ms: Edit layer (6). Tap+hold: repeat.
  &cpp_scope              | Types :: (Red + Base M).
  &cpp_not_equal          | Types != (Red + Base Z).
  &cpp_logical_and        | Types && (Red + Base I).
@@ -314,7 +315,7 @@
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold the Base 6 key, cyan LED), 7 = Yellow.
+   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold the Base 6 key or Space, cyan LED), 7 = Yellow.
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -495,6 +496,18 @@
           mods = <(MOD_LSFT|MOD_RSFT)>;
       };
 
+      // Tap Space = space, hold Space (200 ms) = Edit layer (6).
+      // Tap-preferred: the layer only comes after holding, so fast rolls
+      // like "word next" always type a space. Tap then hold = repeat spaces.
+      hs: hold_space_edit {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <200>;
+          quick-tap-ms = <175>;
+          bindings = <&mo>, <&kp>;
+      };
+
       // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
       td_shift: tap_dance_shift {
           compatible = "zmk,behavior-tap-dance";
@@ -521,7 +534,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &hs 6 SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
       >;
     };
     /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
@@ -606,7 +619,7 @@
       >;
     };
 
-    /* Edit: hold the 6 key (right ring finger, arrow row). A tap types 6.
+    /* Edit: hold the 6 key (right ring finger, arrow row) or Space (200 ms).
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
      * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
      * Old arrow keys (left, bottom row): Left and Right as before.
