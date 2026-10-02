@@ -294,7 +294,7 @@
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
  &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
- &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
+ &en 5 ENTER             | Tap: Enter. Hold 220 ms: Num layer (5).
  &he 6 DE_6              | Tap: 6. Hold: Edit layer (6), like U for Num.
  &cpp_scope              | Types :: (Red + Base M).
  &cpp_not_equal          | Types != (Red + Base Z).
@@ -413,8 +413,9 @@
 
 
       // Tap U = u, hold U = Num layer (5).
-      // Before 280 ms, right-hand finger keys, the left Num digits, < and
-      // Shift can trigger a hold. Other first keys favor a tap instead.
+      // Before 280 ms, right-hand finger keys (including Num e/x),
+      // the left Num digits, <, > and Shift can trigger a hold. Other first
+      // keys favor a tap instead.
       // After the timeout, another key can activate Num regardless of position.
       // U within 150 ms of another non-modifier key always resolves as u.
       hl: hold_layer {
@@ -428,13 +429,25 @@
           hold-trigger-key-positions = <
               7 8 9 10 11 12 13  21 22 23 24 25 26 27  39 40 41 42 43 44 45
               54 55 56 57 58 59  71 72 73 74 75
-              29 30 31 47 48 62  66
+              29 30 31 47 48 49 62  66
           >;
           bindings = <&mo>, <&kp>;
       };
 
 
-      // ' and, with Shift, " (like on an English keyboard)
+      // Tap Enter normally; hold 220 ms for Num (5, purple LED).
+      // Tap-preferred protects quick Enter/letter rolls. Unlike U, Enter
+      // needs no prior idle time and accepts every next-key position.
+      // A quick tap followed by holding Enter repeats Enter instead.
+      en: enter_num {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <220>;
+          quick-tap-ms = <175>;
+          bindings = <&mo>, <&kp>;
+      };
+
       // Tap 6 = 6, hold 6 (right ring, arrow row) = Edit layer (6). Same
       // safety timing as U; the layer only switches on if the next key is
       // on the left half, one of the right Edit keys (G C H T S) or a
@@ -503,6 +516,7 @@
           bindings = <&sk LSHIFT>, <&caps_word>;
       };
 
+      // ' and, with Shift, " (like on an English keyboard)
       sqt_dqt: single_double_quote {
           compatible = "zmk,behavior-mod-morph";
           #binding-cells = <0>;
@@ -521,7 +535,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &kp DEL          &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
+        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &bspc_del        &td_shift        &sl 4            &kp RCTRL           &en 5 ENTER     &kp SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
       >;
     };
     /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
@@ -562,36 +576,43 @@
      * English; bracket pairs side by side (also on the Base arrow-row keys).
      *
      *          out pnk rng mid idx in            in  idx mid rng pnk out
-     *   top            <=   [   ]                 #   ?   "   %
+     *   top            <=   [   ]                 #   ?   "  Tab Bspc %
      *   home   Esc  {   }   -   _  &&            >=   (   )   /   *   +
      *   bottom     ||  ->   &   :   \             ~  ::   <   >  !=   ß
-     *   arrow           ö   $   @                     €   |   !
+     *   arrow       $   ö   ;   =                     €   |   !   @
      *
+     *   ; and = keep their Base positions (Shift: [ and ]).
+     *   $ is on Base ä, @ on Base #. Type }; without releasing Red.
+     *   Right hand: Base R = Tab, L = Backspace (Shift: Delete), ö = %.
+     *   Space thumb = Space. Left thumb stays on Red for all three controls.
      *   Shift thumb = sticky Ctrl+Shift, Enter thumb = Ctrl+Enter.
      */
     extra1 {
       display-name = "Red";
       bindings = <
         &none                    &none                    &none                    &none                    &none                    &none                    &none  &none                    &none                    &none                    &none                    &none                    &none                    &none
-        &none                    &none                    &cpp_less_equal          &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none                    &none  &none                    &kp DE_HASH              &kp DE_QUESTION          &kp DE_DOUBLE_QUOTES     &kp DE_PERCENT           &none                    &none
+        &none                    &none                    &cpp_less_equal          &kp DE_LEFT_BRACKET      &kp DE_RIGHT_BRACKET     &none                    &none  &none                    &kp DE_HASH              &kp DE_QUESTION          &kp DE_DOUBLE_QUOTES     &kp TAB                  &bspc_del                &kp DE_PERCENT
         &kp ESC                  &kp DE_LEFT_BRACE        &kp DE_RIGHT_BRACE       &kp DE_MINUS             &kp DE_UNDERSCORE        &cpp_logical_and         &none  &none                    &none                    &none                    &none                    &none                    &cpp_greater_equal       &kp DE_LEFT_PARENTHESIS  &kp DE_RIGHT_PARENTHESIS &kp DE_SLASH             &kp DE_ASTERISK          &kp DE_PLUS
         &none                    &cpp_logical_or          &cpp_deref_de            &kp DE_AMPERSAND         &kp DE_COLON             &kp DE_BACKSLASH  &none                    &none                    &kp DE_TILDE             &cpp_scope               &kp DE_LESS_THAN         &kp DE_GREATER_THAN      &cpp_not_equal           &kp DE_SHARP_S
-        &none                    &none                    &kp DE_O_UMLAUT          &kp DE_DOLLAR            &kp DE_AT &none                    &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &none                    &kp DE_EURO              &kp DE_PIPE              &kp DE_EXCLAMATION       &none                    &none
+        &none                    &kp DE_DOLLAR            &kp DE_O_UMLAUT          &semi_bracket            &equal_bracket &none               &sk LC(LSHIFT)           &none                    &none                    &kp RC(ENTER)            &kp SPACE                &kp DE_EURO              &kp DE_PIPE              &kp DE_EXCLAMATION       &kp DE_AT                &none
       >;
     };
 
-    /* Num layer: hold U (left index) or Enter (right thumb); a tap types u / Enter.
+    /* Num layer: hold U (left index) or Enter for 220 ms (right thumb).
+     * A tap types u / Enter; Enter has its own timing, separate from U.
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
-     *   top              ,   .                 f   =   *   /   +
+     *   top              ,   .                 f   =   *   /   +   e
      *   home         9   5   6  [U]            -   1   0   2   3  (0)
-     *   bottom      (1)  <   >                 ?   4   7   :   8
+     *   bottom      (1)  <   >                 ?   4   7   :   8   x
      *   arrow           (5)                               (6)
      *
      *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D -, B ? and V :.
-     *   Base F stays f for float literals such as 0.5f. Empty letter keys
-     *   do nothing. Number row, Tab, Del, ; = ( ), # and thumb controls keep
-     *   their usual functions. Holding Enter also opens this layer.
+     *   Base F stays f; right upper outer ö types e, lower outer ü types x.
+     *   Both are reachable while U is held, for 0.5f, 0xff and 1e-3. Other empty
+     *   letter keys do nothing. Number row, Tab, Del, ; = ( ), # and thumb
+     *   controls keep their usual functions. Enter and the bottom-row 6
+     *   are plain keys on Num; holding them does not open another layer.
      *   (x) = same key as on Base. Shift + digit gives its German symbol:
      *   Shift+0 =   Shift+1 !   Shift+5 %   Shift+7 /   Shift+8 (   Shift+9 )
      */
@@ -599,10 +620,10 @@
       display-name = "Num";
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
+        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &kp DE_E
         &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &none            &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
-        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &none
-        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &kp DE_X
+        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &kp DE_6         &trans           &trans
       >;
     };
 
@@ -612,8 +633,10 @@
      * Old arrow keys (left, bottom row): Left and Right as before.
      * Right home: H definition, T back, S toggle line comment.
      * Right upper: G references, C quick fix.
-     * Left upper (ring finger holds 6): , rename, . next problem.
-     * F13-F19 are mapped in VS Code; see config/vscode-keybindings.json.
+     * Left upper (right ring finger holds 6): , rename, . next problem,
+     * P format document. Left lower Q runs the build task.
+     * Enter is plain Enter here, without its Base Num hold action.
+     * F13-F21 are mapped in VS Code; see config/vscode-keybindings.json.
      * Esc is at the original Esc position. Unused letter keys do nothing.
      * Release the key to return.
      */
@@ -621,10 +644,10 @@
       display-name = "Edit";
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
+        &trans           &none            &kp F15          &kp F19          &kp F20          &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
         &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
-        &trans           &trans           &none            &none            &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
-        &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &kp F21          &none            &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 

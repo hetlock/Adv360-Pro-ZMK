@@ -33,5 +33,15 @@
         "key": "f19",
         "command": "editor.action.marker.nextInFiles",
         "when": "editorTextFocus"
+    },
+    {
+        "key": "f20",
+        "command": "editor.action.formatDocument",
+        "when": "editorTextFocus && editorHasDocumentFormattingProvider && !editorReadonly"
+    },
+    {
+        "key": "f21",
+        "command": "workbench.action.tasks.build",
+        "when": "editorTextFocus"
     }
 ]
