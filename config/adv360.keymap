@@ -293,10 +293,10 @@
  Example                 | Meaning
 -------------------------|-----------------------------------------------------
  &cpp_deref_de           | Run the custom macro that types ->.
- &hl 5 DE_U              | Tap: u. Hold: Num layer (5) for as long as U is held.
- &hl 5 ENTER             | Tap: Enter. Hold: Num layer (5), same as holding U.
- &he 6 DE_6              | Tap: 6. Hold: Edit layer (6), like U for Num.
- &hs 6 SPACE             | Tap: space. Hold 200 ms: Edit layer (6). Tap+hold: repeat.
+ &hl 2 DE_U              | Tap: u. Hold: Num layer (2) for as long as U is held.
+ &hl 2 ENTER             | Tap: Enter. Hold: Num layer (2), same as holding U.
+ &he 3 DE_6              | Tap: 6. Hold: Edit layer (3), like U for Num.
+ &hs 3 SPACE             | Tap: space. Hold 200 ms: Edit layer (3). Tap+hold: repeat.
  &cpp_scope              | Types :: (Red + Base M).
  &cpp_not_equal          | Types != (Red + Base Z).
  &cpp_logical_and        | Types && (Red + Base L).
@@ -305,7 +305,7 @@
  &cpp_greater_equal      | Types >= (Red + Base D).
  &sqt_dqt                | Types '; with Shift it types ".
  &td_shift               | Tap: sticky Shift. Double-tap: Caps Word.
- &hb 6 0 (Backspace)     | Tap: Backspace (Shift: Delete). Hold 200 ms: Edit layer.
+ &hb 3 0 (Backspace)     | Tap: Backspace (Shift: Delete). Hold 200 ms: Edit layer.
                          | Tap then hold: repeat Backspace.
  &del_bspc (Del key)     | Delete; Shift + Del key = Backspace.
  &semi_bracket &equal_bracket | Old arrow keys: ; = (with Shift [ ]).
@@ -316,8 +316,9 @@
  NOTES
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
-   0 = Base, 1 = Kp, 2 = Fn, 3 = Mod, 4 = Red,
-   5 = Num (hold U or Enter, purple LED), 6 = Edit (hold 6, Space or Backspace, cyan LED), 7 = Yellow.
+   0 = Base, 1 = Red (symbol key), 2 = Num (hold U or Enter),
+   3 = Edit (hold 6, Space or Backspace), 4-6 = free,
+   7 = Mod (hold the Mod key; highest layer, so it always wins).
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
    timeout of 1 second. This can be configured.
@@ -415,7 +416,7 @@
       #include "version.dtsi"
 
 
-      // Tap U = u, hold U = Num layer (5).
+      // Tap U = u, hold U = Num layer (2).
       // Before 280 ms, right-hand finger keys, the left Num digits, < and
       // Shift can trigger a hold. Other first keys favor a tap instead.
       // After the timeout, another key can activate Num regardless of position.
@@ -438,7 +439,7 @@
 
 
       // ' and, with Shift, " (like on an English keyboard)
-      // Tap 6 = 6, hold 6 (right ring, arrow row) = Edit layer (6). Same
+      // Tap 6 = 6, hold 6 (right ring, arrow row) = Edit layer (3). Same
       // safety timing as U; the layer only switches on if the next key is
       // on the left half, one of the right Edit keys (G C H T S) or a
       // modifier thumb key.
@@ -498,7 +499,7 @@
           mods = <(MOD_LSFT|MOD_RSFT)>;
       };
 
-      // Tap Space = space, hold Space (200 ms) = Edit layer (6).
+      // Tap Space = space, hold Space (200 ms) = Edit layer (3).
       // Tap-preferred: the layer only comes after holding, so fast rolls
       // like "word next" always type a space. Tap then hold = repeat spaces.
       hs: hold_space_edit {
@@ -519,7 +520,7 @@
       };
 
       // Backspace thumb: tap = Backspace (Shift: Delete), hold 200 ms = Edit
-      // layer (6) for left-hand-only arrows. Tap then hold = repeat Backspace.
+      // layer (3) for left-hand-only arrows. Tap then hold = repeat Backspace.
       hb: hold_backspace_edit {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
@@ -551,47 +552,14 @@
     default_layer {
       display-name = "Base";
       bindings = <
-        &kp F2           &kp DE_MINUS     &kp DE_2         &kp DE_3         &kp DE_4         &kp DE_PLUS      &tog 1                                                                                           &mo 3            &kp DE_U_UMLAUT  &kp DE_7         &kp DE_8         &kp DE_9         &kp DE_SHARP_S   &kp DE_CARET
+        &kp F2           &kp DE_MINUS     &kp DE_2         &kp DE_3         &kp DE_4         &kp DE_PLUS      &none                                                                                            &mo 7            &kp DE_U_UMLAUT  &kp DE_7         &kp DE_8         &kp DE_9         &kp DE_SHARP_S   &kp DE_CARET
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
-        &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 5 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
+        &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 2 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &del_bspc        &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &mo 2            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 6 0          &td_shift        &sl 4            &kp RCTRL           &hl 5 ENTER     &hs 6 SPACE                             &paren_brace_l   &paren_brace_r         &he 6 DE_6       &kp DE_HASH      &mo 2
+        &none            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 3 0          &td_shift        &sl 1            &kp RCTRL           &hl 2 ENTER     &hs 3 SPACE                             &paren_brace_l   &paren_brace_r         &he 3 DE_6       &kp DE_HASH      &none
       >;
     };
-    /* Kp (toggle with the top-left inner key): QWERTZ letters plus numpad.
-     * Symbol keys use the DE_ names so they type what the label says on
-     * German Windows: = - \ ' ` ] (US codes typed ´ ß # ä ^ +).
-     */
-    keypad {
-      display-name = "Kp";
-      bindings = <
-        &kp DE_EQUAL     &kp N1           &kp N2           &kp N3           &kp N4     &kp N5           &trans                                                                                                 &mo 3            &kp N6           &kp KP_NUM       &kp KP_EQUAL     &kp KP_DIVIDE    &kp KP_MULTIPLY  &kp DE_MINUS
-        &kp TAB          &kp Q            &kp W            &kp E            &kp R      &kp T            &none                                                                                                  &none            &kp Y            &kp KP_N7        &kp KP_N8        &kp KP_N9        &kp KP_MINUS     &kp DE_BACKSLASH
-        &kp ESC          &kp A            &kp S            &kp D            &kp F            &kp G            &none                  &kp LCTRL        &kp LALT         &kp LGUI         &kp RCTRL              &none            &kp H            &kp KP_N4        &kp KP_N5        &kp KP_N6        &kp KP_PLUS      &kp DE_SINGLE_QUOTE
-        &kp LSHFT        &kp Z            &kp X            &kp C            &kp V            &kp B                                                    &kp END          &kp PG_UP                                                &kp N            &kp KP_N1        &kp KP_N2        &kp KP_N3        &kp KP_ENTER     &kp RSHFT
-        &mo 2            &kp DE_GRAVE     &kp CAPS         &kp LEFT         &kp RIGHT                               &kp BSPC         &kp DEL          &kp END          &kp PG_DN        &kp ENTER        &kp KP_N0                               &kp UP           &kp DOWN         &kp KP_DOT       &kp DE_RIGHT_BRACKET &mo 2
-      >;
-    };
-    fn {
-      display-name = "Fn";
-      bindings = <
-        &kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6           &tog 1                                                                                           &mo 3            &kp F7           &kp F8           &kp F9           &kp F10          &kp F11          &kp F12
-        &trans           &trans           &trans           &trans           &trans           &trans           &none                                                                                            &none            &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &cpp_deref       &cpp_deref_de    &none                  &trans           &trans           &trans           &trans                 &none            &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &trans           &trans                                                   &trans           &trans                                                   &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
-      >;
-    };
-    mod {
-      display-name = "Mod";
-      bindings = <
-        &none            &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_SEL 4     &none                                                                                            &trans           &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &bootloader                                                                                      &bootloader      &none            &none            &none            &none            &none            &none
-        &studio_unlock   &none            &none            &none            &none            &none            &none                  &none            &none            &bt BT_CLR       &none                  &stp STP_BAT     &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &macro_ver       &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &bl BL_TOG       &rgb_ug RGB_TOG                         &bl BL_INC       &bl BL_DEC       &none            &none            &none
-      >;
-    };
+
     /* Red (symbol key, then a key). Placed by symbol frequency in C++ and
      * English; bracket pairs side by side (also on the Base arrow-row keys).
      *
@@ -643,6 +611,7 @@
     /* Edit: hold the 6 key (right ring finger, arrow row), or Space or
      * Backspace for 200 ms (Backspace = arrows with the left hand only).
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
+     * Number row: F1-F12.
      * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
      * Left bottom row: pinky Backspace, ring Delete, middle Backspace.
      * Old arrow keys (left, bottom row): Left and Right as before.
@@ -656,7 +625,7 @@
     extra3 { 
       display-name = "Edit";
       bindings = <
-        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6           &trans                                                                                                       &trans           &kp F7           &kp F8           &kp F9           &kp F10          &kp F11          &kp F12
         &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
         &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
         &trans           &kp BSPC         &kp DEL          &kp BSPC         &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
@@ -664,14 +633,47 @@
       >;
     };
 
-    extra4 { 
-      display-name = "Yellow";    
+    free4 {
+      display-name = "Free 4";
       bindings = <
         &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
         &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
         &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
         &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
         &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+      >;
+    };
+
+    free5 {
+      display-name = "Free 5";
+      bindings = <
+        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+      >;
+    };
+
+    free6 {
+      display-name = "Free 6";
+      bindings = <
+        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+      >;
+    };
+
+    mod {
+      display-name = "Mod";
+      bindings = <
+        &none            &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2     &bt BT_SEL 3     &bt BT_SEL 4     &none                                                                                            &trans           &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none            &none            &bootloader                                                                                      &bootloader      &none            &none            &none            &none            &none            &none
+        &studio_unlock   &none            &none            &none            &none            &none            &none                  &none            &none            &bt BT_CLR       &none                  &stp STP_BAT     &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &macro_ver       &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
+        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &bl BL_TOG       &rgb_ug RGB_TOG                         &bl BL_INC       &bl BL_DEC       &none            &none            &none
       >;
     };
   };
