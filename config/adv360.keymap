@@ -617,12 +617,12 @@
     /* Num layer: hold U (left index) or Enter (right thumb); a tap types u / Enter.
      *
      *           out pnk rng mid idx           in  idx mid rng pnk out
-     *   top              ,   .                 f   =   *   /   +
+     *   top          "   ,   .                 f   =   *   /   +
      *   home         9   5   6  [U] Tab        -   1   0   2   3  (0)
-     *   bottom      (1)  <   >                 ?   4   7   :   8
+     *   bottom      (1)  <   >                 ?   4   7   8   :
      *   arrow           (5)                               (6)
      *
-     *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D -, B ? and V :.
+     *   Direct operators: Base G =, C *, R /, Q <, J >; L +, D -, B ? and Z :; " on the left pinky top key.
      *   Base F stays f for float literals such as 0.5f. Empty letter keys
      *   do nothing. Number row, Tab, Del, ; = ( ), # and thumb controls keep
      *   their usual functions. Holding Enter also opens this layer.
@@ -633,9 +633,9 @@
       display-name = "Num";
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
-        &trans           &trans           &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
+        &trans           &kp DE_DOUBLE_QUOTES &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
         &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &kp TAB          &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
-        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_COLON     &kp DE_8         &none
+        &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_8         &kp DE_COLON     &none
         &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
@@ -644,6 +644,7 @@
      * Backspace for 200 ms (Backspace = arrows with the left hand only).
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
      * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
+     * Left bottom row: pinky Backspace, ring Delete, middle Backspace.
      * Old arrow keys (left, bottom row): Left and Right as before.
      * Right home: H definition, T back, S toggle line comment.
      * Right upper: G references, C quick fix.
@@ -658,7 +659,7 @@
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
         &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
         &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
-        &trans           &trans           &none            &none            &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
+        &trans           &kp BSPC         &kp DEL          &kp BSPC         &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
         &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
