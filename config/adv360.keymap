@@ -631,6 +631,7 @@
      * Backspace for 200 ms (Backspace = arrows with the left hand only).
      * Left home row: A Left, O Down, E Up, U Right. Shift/Ctrl still work.
      * Number row: F1-F12.
+     * Left top row: pinky Home, index End.
      * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
      * Left bottom row: pinky Backspace, ring Delete, middle Backspace.
      * Old arrow keys (left, bottom row): Left and Right as before.
@@ -646,7 +647,7 @@
       display-name = "Edit";
       bindings = <
         &kp F1           &kp F2           &kp F3           &kp F4           &kp F5           &kp F6           &trans                                                                                                       &trans           &kp F7           &kp F8           &kp F9           &kp F10          &kp F11          &kp F12
-        &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
+        &trans           &kp HOME         &kp F15          &kp F19          &kp END          &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
         &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
         &trans           &kp BSPC         &kp DEL          &kp BSPC         &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
         &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &kp UP           &kp DOWN         &trans           &trans           &trans
