@@ -309,7 +309,7 @@
                          | Tap then hold: repeat Backspace.
  &del_bspc (Del key)     | Delete; Shift + Del key = Backspace.
  &semi_bracket &equal_bracket | Old arrow keys: ; = (with Shift [ ]).
- &paren_brace_l/_r       | Old arrow keys: ( ) (with Shift { }).
+ &rctl_paren_l/_r        | Old arrow keys: ( ) (with Shift { }, with right Ctrl [ ]).
 
  <  is on the Esc position (Shift: >). Esc = symbol key (Red), then that key.
 
@@ -530,6 +530,24 @@
           bindings = <&mo>, <&bspc_del>;
       };
 
+      // Right Ctrl + this key = [ (Ctrl is not sent with it); otherwise
+      // the ( / ) key with Shift for { / }.
+      rctl_paren_l: rctl_paren_l {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&paren_brace_l>, <&kp DE_LEFT_BRACKET>;
+          mods = <(MOD_RCTL)>;
+      };
+
+      // Right Ctrl + this key = ] (Ctrl is not sent with it); otherwise
+      // the ( / ) key with Shift for { / }.
+      rctl_paren_r: rctl_paren_r {
+          compatible = "zmk,behavior-mod-morph";
+          #binding-cells = <0>;
+          bindings = <&paren_brace_r>, <&kp DE_RIGHT_BRACKET>;
+          mods = <(MOD_RCTL)>;
+      };
+
       // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
       td_shift: tap_dance_shift {
           compatible = "zmk,behavior-tap-dance";
@@ -556,7 +574,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 2 DE_U       &kp DE_I         &none                  &kp LCTRL        &kp LALT         &kp LGUI            &kp RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &del_bspc        &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &none            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 3 0          &td_shift        &sl 1            &kp RCTRL           &hl 2 ENTER     &hs 3 SPACE                             &paren_brace_l   &paren_brace_r         &he 3 DE_6       &kp DE_HASH      &none
+        &none            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 3 0          &td_shift        &sl 1            &kp RCTRL           &hl 2 ENTER     &hs 3 SPACE                             &rctl_paren_l    &rctl_paren_r          &he 3 DE_6       &kp DE_HASH      &none
       >;
     };
 
