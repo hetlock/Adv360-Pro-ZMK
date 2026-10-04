@@ -453,7 +453,7 @@
           retro-tap;
           hold-trigger-key-positions = <
               14 15 16 17 18 19  28 29 30 31 32 33  46 47 48 49 50 51  63 64
-              23 24 41 42 44  35 36 65 66 67
+              23 24 41 42 44 71 72  35 36 65 66 67
           >;
           bindings = <&mo>, <&kp>;
       };
@@ -615,6 +615,7 @@
      * Left index: I Tab (Shift+I = Shift+Tab), K Delete.
      * Left bottom row: pinky Backspace, ring Delete, middle Backspace.
      * Old arrow keys (left, bottom row): Left and Right as before.
+     * Right arrow row: index Up, middle Down.
      * Right home: H definition, T back, S toggle line comment.
      * Right upper: G references, C quick fix.
      * Left upper (ring finger holds 6): , rename, . next problem.
@@ -629,7 +630,7 @@
         &trans           &none            &kp F15          &kp F19          &none            &none            &none                                                                                            &none            &none            &kp F17          &kp F18          &none            &none            &none
         &kp ESC          &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &kp TAB          &none                  &trans           &trans           &trans           &trans                 &none            &none            &kp F13          &kp F14          &none            &kp F16          &trans
         &trans           &kp BSPC         &kp DEL          &kp BSPC         &kp DEL          &none                                                    &trans           &none                                                    &none            &none            &none            &none            &none            &none
-        &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &trans           &kp LEFT         &kp RIGHT                               &trans           &trans           &trans           &trans           &trans           &trans                                  &kp UP           &kp DOWN         &trans           &trans           &trans
       >;
     };
 
