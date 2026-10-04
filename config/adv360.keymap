@@ -434,7 +434,7 @@
           hold-trigger-key-positions = <
               7 8 9 10 11 12 13  21 22 23 24 25 26 27  39 40 41 42 43 44 45
               54 55 56 57 58 59  71 72 73 74 75
-              15 29 30 31 33 47 48 49 62  66
+              15 29 30 31 33 47 48 49 62  66  32 69
           >;
           bindings = <&mo>, <&kp>;
       };
@@ -559,6 +559,17 @@
           bindings = <&sl 1>, <&kp DE_ASTERISK>;
       };
 
+      // Enter inside the Num layer: tap = Enter, hold = keep Num on. Lets you
+      // switch from holding U to holding Enter (and back) without leaving Num.
+      nl: num_layer_keep {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "balanced";
+          tapping-term-ms = <200>;
+          quick-tap-ms = <175>;
+          bindings = <&mo>, <&kp>;
+      };
+
       // Tap Shift = sticky Shift, double-tap Shift = Caps Word (MAX_SIZE).
       td_shift: tap_dance_shift {
           compatible = "zmk,behavior-tap-dance";
@@ -623,6 +634,8 @@
      *   Base F stays f for float literals such as 0.5f. Empty letter keys
      *   do nothing. Number row, Tab, Del, ; = ( ), # and thumb controls keep
      *   their usual functions. Holding Enter also opens this layer.
+     *   Switch hands freely: while on Num, U and Enter (hold) keep it on,
+     *   so you can hold Enter, press U, release Enter (or the reverse).
      *   (x) = same key as on Base. Shift + digit gives its German symbol:
      *   Shift+0 =   Shift+1 !   Shift+5 %   Shift+7 /   Shift+8 (   Shift+9 )
      */
@@ -631,9 +644,9 @@
       bindings = <
         &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
         &trans           &kp DE_DOUBLE_QUOTES &trans           &trans           &none            &none            &trans                                                                                           &trans           &trans           &kp DE_EQUAL     &kp DE_ASTERISK  &kp DE_SLASH     &kp DE_PLUS      &none
-        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &trans           &kp TAB          &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
+        &trans           &kp DE_9         &kp DE_5         &kp DE_6         &mo 2            &kp TAB          &trans                 &trans           &trans           &trans           &trans                 &trans           &kp DE_MINUS     &kp DE_1         &kp DE_0         &kp DE_2         &kp DE_3         &trans
         &trans           &trans           &kp DE_LESS_THAN &kp DE_GREATER_THAN &none            &none                                                    &trans           &trans                                                   &kp DE_QUESTION  &kp DE_4         &kp DE_7         &kp DE_8         &kp DE_COLON     &none
-        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &kp ENTER        &trans                                  &trans           &trans           &trans           &trans           &trans
+        &trans           &none            &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &nl 2 ENTER      &trans                                  &trans           &trans           &trans           &trans           &trans
       >;
     };
 
