@@ -319,7 +319,8 @@
 -------------------------------------------------------------------------------
  - Layer numbers start at 0. In this keymap:
    0 = Base, 1 = Sym (symbol key), 2 = Num (hold U or Enter),
-   3 = Edit (hold 6, Space or Backspace), 4-6 = free,
+   3 = Edit (hold 6, Space or Backspace), 4 = Nav (toggle: right outer
+   arrow-row key), 5-6 = free,
    7 = Mod (hold the Mod key; highest layer, so it always wins).
 
  - Sticky keys (&sk) and sticky layers (&sl) have a default waiting
@@ -596,7 +597,7 @@
         &kp TAB          &sqt_dqt         &kp DE_COMMA     &kp DE_PERIOD    &kp DE_P         &kp DE_Y         &cpp_deref                                                                                       &none            &kp DE_F         &kp DE_G         &kp DE_C         &kp DE_R         &kp DE_L         &kp DE_O_UMLAUT
         &kp DE_LESS_THAN &kp DE_A         &kp DE_O         &kp DE_E         &hl 2 DE_U       &kp DE_I         &none                  &sk LCTRL        &sk LALT         &kp LGUI            &sk RALT            &none            &kp DE_D         &kp DE_H         &kp DE_T         &kp DE_N         &kp DE_S         &kp DE_0
         &del_bspc        &kp DE_1         &kp DE_Q         &kp DE_J         &kp DE_K         &kp DE_X                                                 &kp END          &none                                                    &kp DE_B         &kp DE_M         &kp DE_W         &kp DE_V         &kp DE_Z         &kp DE_U_UMLAUT
-        &none            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 3 0          &td_shift        &td_sym          &sk RCTRL           &hl 2 ENTER     &hs 3 SPACE                             &rctl_paren_l    &rctl_paren_r          &he 3 DE_6       &kp DE_HASH      &none
+        &none            &kp DE_A_UMLAUT  &kp DE_5         &semi_bracket      &equal_bracket                                 &hb 3 0          &td_shift        &td_sym          &sk RCTRL           &hl 2 ENTER     &hs 3 SPACE                             &rctl_paren_l    &rctl_paren_r          &he 3 DE_6       &kp DE_HASH      &tog 4
       >;
     };
 
@@ -677,14 +678,19 @@
       >;
     };
 
-    free4 {
-      display-name = "Free 4";
+    /* Nav (toggle with the right outer arrow-row key, press again to leave):
+     * arrows on the left home row (A Left, O Down, E Up, U Right) and
+     * q / e on the right index / middle home keys. Every other key works
+     * as on Base.
+     */
+    nav {
+      display-name = "Nav";
       bindings = <
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                                                                                            &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none            &none                  &none            &none            &none            &none                  &none            &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none            &none                                                    &none            &none                                                    &none            &none            &none            &none            &none            &none
-        &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none            &none                                   &none            &none            &none            &none            &none
+        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &trans           &trans           &trans           &trans           &trans                                                                                           &trans           &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &kp LEFT         &kp DOWN         &kp UP           &kp RIGHT        &trans           &trans                 &trans           &trans           &trans           &trans                 &trans           &trans           &kp DE_Q         &kp DE_E         &trans           &trans           &trans
+        &trans           &trans           &trans           &trans           &trans           &trans                                                   &trans           &trans                                                   &trans           &trans           &trans           &trans           &trans           &trans
+        &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &trans           &trans                                  &trans           &trans           &trans           &trans           &tog 4
       >;
     };
 
